@@ -1,0 +1,7 @@
+api:
+  fabrick:
+    host: https://sandbox.platfr.io
+    apiKey: FXOVVXXHVCPVPBZXIJOBGUGSKHDNFRRQJP
+    authSchema: S2S
+    path:
+      get-balance: /api/gbs/banking/v4.0/accounts/{accountId}/balance
