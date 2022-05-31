@@ -44,8 +44,10 @@ public class FabrickClient {
         return response.getBody();
     }
 
-    public String makeBankTransfer(String accountId, MoneyTransfersDto moneyTransfersDto) {
-        HttpEntity<MoneyTransfersDto> entity = new HttpEntity<>(moneyTransfersDto, fabrickHeaders());
+    public String makeBankTransfer(String accountId, MoneyTransfersDto moneyTransfersDto, String timezone) {
+        var httpHeaders = fabrickHeaders();
+        httpHeaders.put("X-Time-Zone", List.of(timezone));
+        HttpEntity<MoneyTransfersDto> entity = new HttpEntity<>(moneyTransfersDto, httpHeaders);
 
         Map<String, String> params = new HashMap<>();
         params.put("accountId", accountId);

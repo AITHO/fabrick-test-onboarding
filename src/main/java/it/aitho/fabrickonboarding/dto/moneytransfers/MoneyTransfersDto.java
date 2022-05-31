@@ -1,6 +1,7 @@
 package it.aitho.fabrickonboarding.dto.moneytransfers;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import it.aitho.fabrickonboarding.enums.FeeTypes;
@@ -24,7 +25,11 @@ public class MoneyTransfersDto {
     private Double amount;
     @NotBlank
     private String currency;
+    @Accessors(fluent = true)
+    @JsonProperty(value="isUrgent")
     private boolean isUrgent;
+    @Accessors(fluent = true)
+    @JsonProperty(value="isInstant")
     private boolean isInstant;
     @JsonSetter(nulls = Nulls.SKIP)
     private FeeTypes feeType = FeeTypes.SHA;

@@ -14,7 +14,7 @@ public class MoneyTransfersServiceImpl implements MoneyTransfersService {
         this.fabrickClient = fabrickClient;
     }
 
-    public String makeBankTransfer(String accountId, MoneyTransfersDto moneyTransfersRequest) {
-        return fabrickClient.makeBankTransfer(accountId, moneyTransfersRequest);
+    public String makeBankTransfer(String accountId, MoneyTransfersDto moneyTransfersRequest, String timezone) {
+        return fabrickClient.makeBankTransfer(accountId, moneyTransfersRequest, timezone);
     }
 }
