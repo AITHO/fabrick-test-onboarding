@@ -1,7 +1,7 @@
 package it.aitho.fabrickonboarding.controller;
 
 import it.aitho.fabrickonboarding.dto.moneytransfers.MoneyTransfersDto;
-import it.aitho.fabrickonboarding.service.AccountService;
+import it.aitho.fabrickonboarding.service.MoneyTransfersService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,14 +14,16 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("money-transfers")
 public class FabrickMoneyTransfersController {
-    private final AccountService accountService;
 
-    public FabrickMoneyTransfersController(AccountService accountService) {
-        this.accountService = accountService;
+    private final MoneyTransfersService moneyTransfersService;
+
+    public FabrickMoneyTransfersController(MoneyTransfersService moneyTransfersService) {
+        this.moneyTransfersService = moneyTransfersService;
     }
+
     @PostMapping("{accountId}")
-    public ResponseEntity<MoneyTransfersDto> doMoneyTransfer(@PathVariable("accountId") String accountId, @Valid @RequestBody MoneyTransfersDto dto) {
-        return ResponseEntity.ok(dto);
+    public ResponseEntity<String> doMoneyTransfer(@PathVariable("accountId") String accountId, @Valid @RequestBody MoneyTransfersDto dto) {
+        return ResponseEntity.ok(this.moneyTransfersService.makeBankTransfer(accountId, dto));
     }
 
 }

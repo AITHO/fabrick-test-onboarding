@@ -1,4 +1,4 @@
-package it.aitho.fabrickonboarding.dto;
+package it.aitho.fabrickonboarding.dto.accountbalance;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;

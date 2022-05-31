@@ -1,6 +1,7 @@
 package it.aitho.fabrickonboarding.client;
 
-import it.aitho.fabrickonboarding.dto.AccountBalanceDto;
+import it.aitho.fabrickonboarding.dto.accountbalance.AccountBalanceDto;
+import it.aitho.fabrickonboarding.dto.moneytransfers.MoneyTransfersDto;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpEntity;
@@ -22,6 +23,8 @@ public class FabrickClient {
     private String host;
     @Value("${api.fabrick.path.get-balance}")
     private String getBalancePath;
+    @Value("${api.fabrick.path.create-money-transfers}")
+    private String createMoneyTransfersPath;
     @Value("${api.fabrick.apiKey}")
     private String apiKey;
     @Value("${api.fabrick.authSchema}")
@@ -32,7 +35,7 @@ public class FabrickClient {
     }
 
     public AccountBalanceDto retrieveAccountBalance(String accountId) {
-        HttpEntity<String> entity = new HttpEntity<>(null, fabickHeaders());
+        HttpEntity<String> entity = new HttpEntity<>(null, fabrickHeaders());
 
         Map<String, String> params = new HashMap<>();
         params.put("accountId", accountId);
@@ -41,7 +44,17 @@ public class FabrickClient {
         return response.getBody();
     }
 
-    private HttpHeaders fabickHeaders() {
+    public String makeBankTransfer(String accountId, MoneyTransfersDto moneyTransfersDto) {
+        HttpEntity<MoneyTransfersDto> entity = new HttpEntity<>(moneyTransfersDto, fabrickHeaders());
+
+        Map<String, String> params = new HashMap<>();
+        params.put("accountId", accountId);
+
+        var response = restTemplate.exchange(host + createMoneyTransfersPath, HttpMethod.POST, entity, String.class, params);
+        return response.getBody();
+    }
+
+    private HttpHeaders fabrickHeaders() {
         HttpHeaders headers = new HttpHeaders();
         headers.put("Content-Type", List.of("application/json"));
         headers.put("Auth-Schema", List.of(authSchema));

@@ -1,8 +1,8 @@
 package it.aitho.fabrickonboarding.service.impl;
 
 import it.aitho.fabrickonboarding.client.FabrickClient;
-import it.aitho.fabrickonboarding.dto.AccountBalanceDto;
-import it.aitho.fabrickonboarding.dto.AccountBalancePayload;
+import it.aitho.fabrickonboarding.dto.accountbalance.AccountBalanceDto;
+import it.aitho.fabrickonboarding.dto.accountbalance.AccountBalancePayload;
 import it.aitho.fabrickonboarding.enums.FabrickResponseStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

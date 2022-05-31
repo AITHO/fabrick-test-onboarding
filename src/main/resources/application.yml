@@ -5,3 +5,4 @@ api:
     authSchema: S2S
     path:
       get-balance: /api/gbs/banking/v4.0/accounts/{accountId}/balance
+      create-money-transfers: /api/gbs/banking/v4.0/accounts/{accountId}/payments/money-transfers
