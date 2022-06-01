@@ -9,12 +9,13 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.HttpStatus;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.web.client.HttpServerErrorException;
 
 import java.time.LocalDate;
 import java.util.List;
 
-import static java.util.Arrays.asList;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -40,6 +41,18 @@ class FabrickAccountsControllerTest {
 
         this.mockMvc.perform(get(PATH + "/123456")).andDo(print()).andExpect(status().isOk())
                 .andExpect(jsonPath("$.balance").value("15.0"));
+    }
+
+    @Test
+    public void shouldGetTheBalanceBadRequestTest() throws Exception {
+        byte[] bodyError = "{\"status\": \"KO\"}".getBytes();
+
+        HttpServerErrorException serverErrorException = new HttpServerErrorException(HttpStatus.BAD_REQUEST, "error", bodyError, null);
+        Mockito.when(accountService.retrieveAccountBalance(anyString()))
+                .thenThrow(serverErrorException);
+
+        this.mockMvc.perform(get(PATH + "/123456")).andDo(print()).andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.status").value("KO"));
     }
 
     @Test
