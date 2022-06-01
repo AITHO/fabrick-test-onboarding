@@ -2,6 +2,7 @@ package it.aitho.fabrickonboarding.client;
 
 import it.aitho.fabrickonboarding.dto.accountbalance.AccountBalanceDto;
 import it.aitho.fabrickonboarding.dto.moneytransfers.MoneyTransfersDto;
+import it.aitho.fabrickonboarding.dto.moneytransfers.MoneyTransfersResponseDto;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpEntity;
@@ -44,7 +45,7 @@ public class FabrickClient {
         return response.getBody();
     }
 
-    public String makeBankTransfer(String accountId, MoneyTransfersDto moneyTransfersDto, String timezone) {
+    public MoneyTransfersResponseDto makeBankTransfer(String accountId, MoneyTransfersDto moneyTransfersDto, String timezone) {
         var httpHeaders = fabrickHeaders();
         httpHeaders.put("X-Time-Zone", List.of(timezone));
         HttpEntity<MoneyTransfersDto> entity = new HttpEntity<>(moneyTransfersDto, httpHeaders);
@@ -52,7 +53,7 @@ public class FabrickClient {
         Map<String, String> params = new HashMap<>();
         params.put("accountId", accountId);
 
-        var response = restTemplate.exchange(host + createMoneyTransfersPath, HttpMethod.POST, entity, String.class, params);
+        var response = restTemplate.exchange(host + createMoneyTransfersPath, HttpMethod.POST, entity, MoneyTransfersResponseDto.class, params);
         return response.getBody();
     }
 

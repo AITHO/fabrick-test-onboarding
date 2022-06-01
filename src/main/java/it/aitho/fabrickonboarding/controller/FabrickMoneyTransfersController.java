@@ -1,6 +1,7 @@
 package it.aitho.fabrickonboarding.controller;
 
 import it.aitho.fabrickonboarding.dto.moneytransfers.MoneyTransfersDto;
+import it.aitho.fabrickonboarding.dto.moneytransfers.MoneyTransfersResponseDto;
 import it.aitho.fabrickonboarding.service.MoneyTransfersService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,7 +24,7 @@ public class FabrickMoneyTransfersController {
     }
 
     @PostMapping("{accountId}")
-    public ResponseEntity<String> doMoneyTransfer(
+    public ResponseEntity<MoneyTransfersResponseDto> doMoneyTransfer(
             @PathVariable("accountId") String accountId,
             @Valid @RequestBody MoneyTransfersDto dto,
             @RequestHeader(value= "X-Time-Zone", defaultValue="Europe/Rome") String timezone) {
