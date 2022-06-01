@@ -3,6 +3,7 @@ package it.aitho.fabrickonboarding.client;
 import it.aitho.fabrickonboarding.dto.accountbalance.AccountBalanceDto;
 import it.aitho.fabrickonboarding.dto.moneytransfers.MoneyTransfersDto;
 import it.aitho.fabrickonboarding.dto.moneytransfers.MoneyTransfersResponseDto;
+import it.aitho.fabrickonboarding.dto.transactions.GetTransactionsResponseDto;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpEntity;
@@ -26,6 +27,8 @@ public class FabrickClient {
     private String getBalancePath;
     @Value("${api.fabrick.path.create-money-transfers}")
     private String createMoneyTransfersPath;
+    @Value("${api.fabrick.path.get-transactions}")
+    private String getTransactionsPath;
     @Value("${api.fabrick.apiKey}")
     private String apiKey;
     @Value("${api.fabrick.authSchema}")
@@ -63,5 +66,17 @@ public class FabrickClient {
         headers.put("Auth-Schema", List.of(authSchema));
         headers.put("Api-Key", List.of(apiKey));
         return headers;
+    }
+
+    public GetTransactionsResponseDto retrieveAccountTransactions(String accountId, String fromAccountingDate, String toAccountingDate) {
+        HttpEntity<String> entity = new HttpEntity<>(null, fabrickHeaders());
+
+        Map<String, String> params = new HashMap<>();
+        params.put("accountId", accountId);
+        params.put("fromAccountingDate", fromAccountingDate);
+        params.put("toAccountingDate", toAccountingDate);
+
+        var response = restTemplate.exchange(host + getTransactionsPath, HttpMethod.GET, entity, GetTransactionsResponseDto.class, params);
+        return response.getBody();
     }
 }
