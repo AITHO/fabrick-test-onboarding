@@ -36,7 +36,7 @@ class AccountServiceImplTest {
     void retrieveAccountBalanceTest() {
         var accountBalanceResponse = new AccountBalanceDto();
         accountBalanceResponse.setStatus(FabrickResponseStatus.OK);
-        AccountBalancePayload payload = new AccountBalancePayload();
+        AccountBalancePayload payload = AccountBalancePayload.builder().build();
         payload.setBalance(15.0);
         accountBalanceResponse.setPayload(payload);
         Mockito.when(fabrickClient.retrieveAccountBalance(anyString())).thenReturn(accountBalanceResponse);
@@ -48,11 +48,11 @@ class AccountServiceImplTest {
 
     @Test
     void retrieveTransactionsTest() {
-        GetTransactionsResponseDto getTransactionsResponse = new GetTransactionsResponseDto();
+        GetTransactionsResponseDto getTransactionsResponse = GetTransactionsResponseDto.builder().build();
         getTransactionsResponse.setStatus(FabrickResponseStatus.OK);
-        var getTransactionsPayload = new GetTransactionsPayload();
-        var transaction = new Transaction();
-        transaction.setTransactionId("12345");
+        var getTransactionsPayload = GetTransactionsPayload.builder().build();
+        var transaction = Transaction.builder().transactionId("12345").build();
+
         List<Transaction> list = List.of(transaction);
         getTransactionsPayload.setList(list);
 
