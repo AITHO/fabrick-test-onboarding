@@ -11,7 +11,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Data
-public class MoneyTransfersResponseDto {
+public class MoneyTransfersPayloadDto {
     private String moneyTransferId;
     private MoneyTransferStatusEnum status;
     private DirectionEnum direction;

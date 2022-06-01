@@ -2,7 +2,7 @@ package it.aitho.fabrickonboarding.client;
 
 import it.aitho.fabrickonboarding.dto.accountbalance.AccountBalanceDto;
 import it.aitho.fabrickonboarding.dto.moneytransfers.MoneyTransfersDto;
-import it.aitho.fabrickonboarding.dto.moneytransfers.MoneyTransfersResponseDto;
+import it.aitho.fabrickonboarding.dto.moneytransfers.MoneyTransfersResponse;
 import it.aitho.fabrickonboarding.dto.transactions.GetTransactionsResponseDto;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -11,6 +11,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.HashMap;
 import java.util.List;
@@ -19,6 +20,7 @@ import java.util.Map;
 @Component
 public class FabrickClient {
 
+    private static final String ACCOUNT_ID = "accountId";
     private final RestTemplate restTemplate;
 
     @Value("${api.fabrick.host}")
@@ -42,21 +44,21 @@ public class FabrickClient {
         HttpEntity<String> entity = new HttpEntity<>(null, fabrickHeaders());
 
         Map<String, String> params = new HashMap<>();
-        params.put("accountId", accountId);
+        params.put(ACCOUNT_ID, accountId);
 
         var response = restTemplate.exchange(host + getBalancePath, HttpMethod.GET, entity, AccountBalanceDto.class, params);
         return response.getBody();
     }
 
-    public MoneyTransfersResponseDto makeBankTransfer(String accountId, MoneyTransfersDto moneyTransfersDto, String timezone) {
+    public MoneyTransfersResponse makeBankTransfer(String accountId, MoneyTransfersDto moneyTransfersDto, String timezone) {
         var httpHeaders = fabrickHeaders();
         httpHeaders.put("X-Time-Zone", List.of(timezone));
         HttpEntity<MoneyTransfersDto> entity = new HttpEntity<>(moneyTransfersDto, httpHeaders);
 
         Map<String, String> params = new HashMap<>();
-        params.put("accountId", accountId);
+        params.put(ACCOUNT_ID, accountId);
 
-        var response = restTemplate.exchange(host + createMoneyTransfersPath, HttpMethod.POST, entity, MoneyTransfersResponseDto.class, params);
+        var response = restTemplate.exchange(host + createMoneyTransfersPath, HttpMethod.POST, entity, MoneyTransfersResponse.class, params);
         return response.getBody();
     }
 
@@ -72,11 +74,16 @@ public class FabrickClient {
         HttpEntity<String> entity = new HttpEntity<>(null, fabrickHeaders());
 
         Map<String, String> params = new HashMap<>();
-        params.put("accountId", accountId);
+        params.put(ACCOUNT_ID, accountId);
         params.put("fromAccountingDate", fromAccountingDate);
         params.put("toAccountingDate", toAccountingDate);
 
-        var response = restTemplate.exchange(host + getTransactionsPath, HttpMethod.GET, entity, GetTransactionsResponseDto.class, params);
+        String urlTemplate = UriComponentsBuilder.fromHttpUrl(host + getTransactionsPath)
+                .queryParam("fromAccountingDate", "{fromAccountingDate}")
+                .queryParam("toAccountingDate", "{toAccountingDate}")
+                .encode()
+                .toUriString();
+        var response = restTemplate.exchange(urlTemplate, HttpMethod.GET, entity, GetTransactionsResponseDto.class, params);
         return response.getBody();
     }
 }

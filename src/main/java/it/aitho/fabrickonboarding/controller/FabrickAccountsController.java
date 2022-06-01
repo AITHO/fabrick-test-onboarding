@@ -1,7 +1,7 @@
 package it.aitho.fabrickonboarding.controller;
 
 import it.aitho.fabrickonboarding.dto.accountbalance.AccountBalancePayload;
-import it.aitho.fabrickonboarding.dto.transactions.GetTransactionsResponseDto;
+import it.aitho.fabrickonboarding.dto.transactions.GetTransactionsPayload;
 import it.aitho.fabrickonboarding.service.AccountService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,7 +26,7 @@ public class FabrickAccountsController {
     }
 
     @GetMapping("{accountId}/transactions")
-    public ResponseEntity<GetTransactionsResponseDto> accountTransactions(
+    public ResponseEntity<GetTransactionsPayload> accountTransactions(
             @PathVariable("accountId") String accountId,
             @RequestParam String fromAccountingDate,
             @RequestParam String toAccountingDate) {

@@ -23,7 +23,7 @@ class FabrickAccountsControllerTest {
     private AccountService accountService;
 
     @Test
-    public void shouldGetTheBalance() throws Exception {
+    void shouldGetTheBalance() throws Exception {
         var response = new AccountBalancePayload();
         response.setBalance(15.0);
         Mockito.when(accountService.retrieveAccountBalance("123456")).thenReturn(response);

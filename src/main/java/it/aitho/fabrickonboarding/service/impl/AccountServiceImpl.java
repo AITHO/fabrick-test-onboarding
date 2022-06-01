@@ -2,7 +2,7 @@ package it.aitho.fabrickonboarding.service.impl;
 
 import it.aitho.fabrickonboarding.client.FabrickClient;
 import it.aitho.fabrickonboarding.dto.accountbalance.AccountBalancePayload;
-import it.aitho.fabrickonboarding.dto.transactions.GetTransactionsResponseDto;
+import it.aitho.fabrickonboarding.dto.transactions.GetTransactionsPayload;
 import it.aitho.fabrickonboarding.service.AccountService;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +21,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public GetTransactionsResponseDto retrieveAccountTransactions(String accountId, String fromAccountingDate, String toAccountingDate) {
-        return fabrickClient.retrieveAccountTransactions(accountId, fromAccountingDate, toAccountingDate);
+    public GetTransactionsPayload retrieveAccountTransactions(String accountId, String fromAccountingDate, String toAccountingDate) {
+        return fabrickClient.retrieveAccountTransactions(accountId, fromAccountingDate, toAccountingDate).getPayload();
     }
 }

@@ -3,6 +3,7 @@ package it.aitho.fabrickonboarding.service.impl;
 import it.aitho.fabrickonboarding.client.FabrickClient;
 import it.aitho.fabrickonboarding.dto.accountbalance.AccountBalanceDto;
 import it.aitho.fabrickonboarding.dto.accountbalance.AccountBalancePayload;
+import it.aitho.fabrickonboarding.dto.transactions.GetTransactionsPayload;
 import it.aitho.fabrickonboarding.dto.transactions.GetTransactionsResponseDto;
 import it.aitho.fabrickonboarding.dto.transactions.Transaction;
 import it.aitho.fabrickonboarding.enums.FabrickResponseStatus;
@@ -47,13 +48,17 @@ class AccountServiceImplTest {
 
     @Test
     void retrieveTransactionsTest() {
-        var getTransactionsResponseDto = new GetTransactionsResponseDto();
+        GetTransactionsResponseDto getTransactionsResponse = new GetTransactionsResponseDto();
+        getTransactionsResponse.setStatus(FabrickResponseStatus.OK);
+        var getTransactionsPayload = new GetTransactionsPayload();
         var transaction = new Transaction();
         transaction.setTransactionId("12345");
         List<Transaction> list = List.of(transaction);
-        getTransactionsResponseDto.setList(list);
+        getTransactionsPayload.setList(list);
 
-        Mockito.when(fabrickClient.retrieveAccountTransactions(anyString(), anyString(), anyString())).thenReturn(getTransactionsResponseDto);
+        getTransactionsResponse.setPayload(getTransactionsPayload);
+
+        Mockito.when(fabrickClient.retrieveAccountTransactions(anyString(), anyString(), anyString())).thenReturn(getTransactionsResponse);
 
         var result = accountService.retrieveAccountTransactions("accountId", "from", "to");
         Assertions.assertNotNull(result);

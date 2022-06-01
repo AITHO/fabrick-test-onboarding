@@ -1,11 +1,9 @@
 package it.aitho.fabrickonboarding.dto.transactions;
 
+import it.aitho.fabrickonboarding.dto.FabrickGenericResponseDto;
 import lombok.Data;
 
-import java.util.List;
-
 @Data
-public class GetTransactionsResponseDto {
-    private List<Transaction> list;
-
+public class GetTransactionsResponseDto extends FabrickGenericResponseDto {
+    private GetTransactionsPayload payload;
 }
