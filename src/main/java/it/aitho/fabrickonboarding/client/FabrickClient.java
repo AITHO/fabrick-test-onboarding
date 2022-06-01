@@ -57,7 +57,6 @@ public class FabrickClient {
 
         Map<String, String> params = new HashMap<>();
         params.put(ACCOUNT_ID, accountId);
-
         var response = restTemplate.exchange(host + createMoneyTransfersPath, HttpMethod.POST, entity, MoneyTransfersResponse.class, params);
         return response.getBody();
     }

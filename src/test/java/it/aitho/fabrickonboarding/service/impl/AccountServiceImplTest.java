@@ -7,11 +7,15 @@ import it.aitho.fabrickonboarding.dto.transactions.GetTransactionsPayload;
 import it.aitho.fabrickonboarding.dto.transactions.GetTransactionsResponseDto;
 import it.aitho.fabrickonboarding.dto.transactions.Transaction;
 import it.aitho.fabrickonboarding.enums.FabrickResponseStatus;
+import it.aitho.fabrickonboarding.mapper.TransactionsMapper;
+import it.aitho.fabrickonboarding.repository.TransactionRepository;
+import it.aitho.fabrickonboarding.repository.TransactionTypeRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
@@ -26,10 +30,16 @@ class AccountServiceImplTest {
     private FabrickClient fabrickClient;
     @InjectMocks
     private AccountServiceImpl accountService;
+    @MockBean
+    private TransactionRepository transactionRepository;
+    @MockBean
+    private TransactionTypeRepository transactionTypeRepository;
+    @Autowired
+    private TransactionsMapper transactionsMapper;
 
     @BeforeEach
     void init() {
-        accountService = new AccountServiceImpl(fabrickClient);
+        accountService = new AccountServiceImpl(fabrickClient, transactionRepository, transactionTypeRepository, transactionsMapper);
     }
 
     @Test

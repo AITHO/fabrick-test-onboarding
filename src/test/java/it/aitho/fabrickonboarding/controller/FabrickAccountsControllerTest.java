@@ -12,6 +12,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import static java.util.Arrays.asList;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -33,7 +34,7 @@ class FabrickAccountsControllerTest {
     private static final String CURRENCY_EUR = "EUR";
 
     @Test
-    public void shouldGetTheBalance() throws Exception {
+    void shouldGetTheBalance() throws Exception {
         Mockito.when(accountService.retrieveAccountBalance(anyString()))
                 .thenReturn(mockAccountBalancePayload());
 
@@ -42,7 +43,7 @@ class FabrickAccountsControllerTest {
     }
 
     @Test
-    public void shouldGetAccountTransactions() throws Exception {
+    void shouldGetAccountTransactions() throws Exception {
         Mockito.when(accountService.retrieveAccountTransactions(anyString(), anyString(), anyString()))
                 .thenReturn(mockGetTransactionsPayload());
 
@@ -69,7 +70,7 @@ class FabrickAccountsControllerTest {
                 .build();
 
         return GetTransactionsPayload.builder()
-                .list(asList(transaction))
+                .list(List.of(transaction))
                 .build();
     }
 }
