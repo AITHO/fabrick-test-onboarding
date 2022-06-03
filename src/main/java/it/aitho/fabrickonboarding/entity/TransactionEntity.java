@@ -1,6 +1,5 @@
 package it.aitho.fabrickonboarding.entity;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -20,7 +19,7 @@ import java.util.UUID;
 @Setter
 @ToString
 @RequiredArgsConstructor
-public class MoneyTransferTransactionEntity {
+public class TransactionEntity {
 
     @Id
     private String transactionId;
@@ -45,7 +44,7 @@ public class MoneyTransferTransactionEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        MoneyTransferTransactionEntity that = (MoneyTransferTransactionEntity) o;
+        TransactionEntity that = (TransactionEntity) o;
         return transactionId != null && Objects.equals(transactionId, that.transactionId);
     }
 

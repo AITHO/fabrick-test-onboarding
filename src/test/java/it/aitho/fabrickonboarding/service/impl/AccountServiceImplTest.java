@@ -1,7 +1,7 @@
 package it.aitho.fabrickonboarding.service.impl;
 
 import it.aitho.fabrickonboarding.client.FabrickClient;
-import it.aitho.fabrickonboarding.dto.accountbalance.AccountBalanceDto;
+import it.aitho.fabrickonboarding.dto.accountbalance.AccountBalanceResponseDto;
 import it.aitho.fabrickonboarding.dto.accountbalance.AccountBalancePayload;
 import it.aitho.fabrickonboarding.dto.transactions.GetTransactionsPayload;
 import it.aitho.fabrickonboarding.dto.transactions.GetTransactionsResponseDto;
@@ -44,7 +44,7 @@ class AccountServiceImplTest {
 
     @Test
     void retrieveAccountBalanceTest() {
-        var accountBalanceResponse = new AccountBalanceDto();
+        var accountBalanceResponse = new AccountBalanceResponseDto();
         accountBalanceResponse.setStatus(FabrickResponseStatus.OK);
         AccountBalancePayload payload = AccountBalancePayload.builder().build();
         payload.setBalance(15.0);

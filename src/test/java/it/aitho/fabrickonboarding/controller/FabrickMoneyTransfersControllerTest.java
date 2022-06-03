@@ -2,8 +2,8 @@ package it.aitho.fabrickonboarding.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import it.aitho.fabrickonboarding.dto.moneytransfers.Creditor;
-import it.aitho.fabrickonboarding.dto.moneytransfers.MoneyTransfersDto;
-import it.aitho.fabrickonboarding.dto.moneytransfers.MoneyTransfersPayloadDto;
+import it.aitho.fabrickonboarding.dto.moneytransfers.MoneyTransfersRequestDto;
+import it.aitho.fabrickonboarding.dto.moneytransfers.MoneyTransfersPayload;
 import it.aitho.fabrickonboarding.service.MoneyTransfersService;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -30,7 +30,7 @@ class FabrickMoneyTransfersControllerTest {
     private MoneyTransfersService moneyTransfersService;
 
     @Test
-    public void doMoneyTransferTest() throws Exception {
+    void doMoneyTransferTest() throws Exception {
         Mockito.when(moneyTransfersService.makeBankTransfer(anyString(), any(), anyString()))
                 .thenReturn(mockMoneyTransfersPayloadDto());
 
@@ -44,18 +44,18 @@ class FabrickMoneyTransfersControllerTest {
                 .andExpect(jsonPath("$.description", is("test")));
     }
 
-    private MoneyTransfersDto mockMoneyTransfersDto() {
-        MoneyTransfersDto moneyTransfersDto = new MoneyTransfersDto();
-        moneyTransfersDto.setCreditor(new Creditor());
-        moneyTransfersDto.setDescription("test");
-        moneyTransfersDto.setAmount(22.22);
-        moneyTransfersDto.setCurrency("EUR");
+    private MoneyTransfersRequestDto mockMoneyTransfersDto() {
+        MoneyTransfersRequestDto moneyTransfersRequestDto = new MoneyTransfersRequestDto();
+        moneyTransfersRequestDto.setCreditor(new Creditor());
+        moneyTransfersRequestDto.setDescription("test");
+        moneyTransfersRequestDto.setAmount(22.22);
+        moneyTransfersRequestDto.setCurrency("EUR");
 
-        return moneyTransfersDto;
+        return moneyTransfersRequestDto;
     }
 
-    private MoneyTransfersPayloadDto mockMoneyTransfersPayloadDto() {
-        MoneyTransfersPayloadDto mockMoneyTransfersDto = new MoneyTransfersPayloadDto();
+    private MoneyTransfersPayload mockMoneyTransfersPayloadDto() {
+        MoneyTransfersPayload mockMoneyTransfersDto = new MoneyTransfersPayload();
         mockMoneyTransfersDto.setDescription("test");
         return mockMoneyTransfersDto;
     }

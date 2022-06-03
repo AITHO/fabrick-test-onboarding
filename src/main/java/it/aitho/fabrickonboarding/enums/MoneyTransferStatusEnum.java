@@ -1,4 +1,4 @@
-package it.aitho.fabrickonboarding.dto.moneytransfers;
+package it.aitho.fabrickonboarding.enums;
 
 public enum MoneyTransferStatusEnum {
     EXECUTED,

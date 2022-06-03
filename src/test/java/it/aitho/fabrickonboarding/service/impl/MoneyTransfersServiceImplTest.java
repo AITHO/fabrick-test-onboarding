@@ -2,9 +2,9 @@ package it.aitho.fabrickonboarding.service.impl;
 
 import it.aitho.fabrickonboarding.client.FabrickClient;
 import it.aitho.fabrickonboarding.dto.moneytransfers.Amount;
-import it.aitho.fabrickonboarding.dto.moneytransfers.MoneyTransfersDto;
-import it.aitho.fabrickonboarding.dto.moneytransfers.MoneyTransfersPayloadDto;
-import it.aitho.fabrickonboarding.dto.moneytransfers.MoneyTransfersResponse;
+import it.aitho.fabrickonboarding.dto.moneytransfers.MoneyTransfersRequestDto;
+import it.aitho.fabrickonboarding.dto.moneytransfers.MoneyTransfersPayload;
+import it.aitho.fabrickonboarding.dto.moneytransfers.MoneyTransfersResponseDto;
 import it.aitho.fabrickonboarding.enums.FabrickResponseStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -33,25 +33,25 @@ class MoneyTransfersServiceImplTest {
 
     @Test
     void makeBankTransferTest() {
-        MoneyTransfersResponse moneyTransfersResponse = mockMoneyTransfersResponse();
-        Mockito.when(fabrickClient.makeBankTransfer(anyString(), any(), anyString())).thenReturn(moneyTransfersResponse);
+        MoneyTransfersResponseDto moneyTransfersResponseDto = mockMoneyTransfersResponse();
+        Mockito.when(fabrickClient.makeBankTransfer(anyString(), any(), anyString())).thenReturn(moneyTransfersResponseDto);
 
-        var result = moneyTransfersService.makeBankTransfer("123", new MoneyTransfersDto(), "");
+        var result = moneyTransfersService.makeBankTransfer("123", new MoneyTransfersRequestDto(), "");
         Assertions.assertNotNull(result);
         Assertions.assertEquals(120, result.getAmount().getCreditorAmount());
     }
 
-    private MoneyTransfersResponse mockMoneyTransfersResponse() {
+    private MoneyTransfersResponseDto mockMoneyTransfersResponse() {
         Amount amount = new Amount();
         amount.setCreditorAmount(120);
 
-        MoneyTransfersPayloadDto payload = new MoneyTransfersPayloadDto();
+        MoneyTransfersPayload payload = new MoneyTransfersPayload();
         payload.setAmount(amount);
 
-        MoneyTransfersResponse moneyTransfersResponse = new MoneyTransfersResponse();
-        moneyTransfersResponse.setPayload(payload);
-        moneyTransfersResponse.setStatus(FabrickResponseStatus.OK);
+        MoneyTransfersResponseDto moneyTransfersResponseDto = new MoneyTransfersResponseDto();
+        moneyTransfersResponseDto.setPayload(payload);
+        moneyTransfersResponseDto.setStatus(FabrickResponseStatus.OK);
 
-        return moneyTransfersResponse;
+        return moneyTransfersResponseDto;
     }
 }

@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 @Data
-public class MoneyTransfersDto {
+public class MoneyTransfersRequestDto {
     @NotNull
     private Creditor creditor;
     @JsonFormat(pattern="yyyy-MM-dd")

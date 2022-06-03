@@ -1,8 +1,8 @@
 package it.aitho.fabrickonboarding.service;
 
-import it.aitho.fabrickonboarding.dto.moneytransfers.MoneyTransfersDto;
-import it.aitho.fabrickonboarding.dto.moneytransfers.MoneyTransfersPayloadDto;
+import it.aitho.fabrickonboarding.dto.moneytransfers.MoneyTransfersRequestDto;
+import it.aitho.fabrickonboarding.dto.moneytransfers.MoneyTransfersPayload;
 
 public interface MoneyTransfersService {
-    MoneyTransfersPayloadDto makeBankTransfer(String accountId, MoneyTransfersDto request, String timezone);
+    MoneyTransfersPayload makeBankTransfer(String accountId, MoneyTransfersRequestDto request, String timezone);
 }

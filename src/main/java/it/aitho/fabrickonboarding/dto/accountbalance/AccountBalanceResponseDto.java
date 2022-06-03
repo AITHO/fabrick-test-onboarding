@@ -4,8 +4,8 @@ import it.aitho.fabrickonboarding.dto.FabrickGenericResponseDto;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-@EqualsAndHashCode(callSuper = true)
 @Data
-public class AccountBalanceDto extends FabrickGenericResponseDto{
+@EqualsAndHashCode(callSuper = true)
+public class AccountBalanceResponseDto extends FabrickGenericResponseDto{
     private AccountBalancePayload payload;
 }

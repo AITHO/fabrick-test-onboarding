@@ -1,8 +1,8 @@
 package it.aitho.fabrickonboarding.client;
 
-import it.aitho.fabrickonboarding.dto.accountbalance.AccountBalanceDto;
-import it.aitho.fabrickonboarding.dto.moneytransfers.MoneyTransfersDto;
-import it.aitho.fabrickonboarding.dto.moneytransfers.MoneyTransfersResponse;
+import it.aitho.fabrickonboarding.dto.accountbalance.AccountBalanceResponseDto;
+import it.aitho.fabrickonboarding.dto.moneytransfers.MoneyTransfersRequestDto;
+import it.aitho.fabrickonboarding.dto.moneytransfers.MoneyTransfersResponseDto;
 import it.aitho.fabrickonboarding.dto.transactions.GetTransactionsResponseDto;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -40,24 +40,24 @@ public class FabrickClient {
         this.restTemplate = builder.build();
     }
 
-    public AccountBalanceDto retrieveAccountBalance(String accountId) {
+    public AccountBalanceResponseDto retrieveAccountBalance(String accountId) {
         HttpEntity<String> entity = new HttpEntity<>(null, fabrickHeaders());
 
         Map<String, String> params = new HashMap<>();
         params.put(ACCOUNT_ID, accountId);
 
-        var response = restTemplate.exchange(host + getBalancePath, HttpMethod.GET, entity, AccountBalanceDto.class, params);
+        var response = restTemplate.exchange(host + getBalancePath, HttpMethod.GET, entity, AccountBalanceResponseDto.class, params);
         return response.getBody();
     }
 
-    public MoneyTransfersResponse makeBankTransfer(String accountId, MoneyTransfersDto moneyTransfersDto, String timezone) {
+    public MoneyTransfersResponseDto makeBankTransfer(String accountId, MoneyTransfersRequestDto moneyTransfersRequestDto, String timezone) {
         var httpHeaders = fabrickHeaders();
         httpHeaders.put("X-Time-Zone", List.of(timezone));
-        HttpEntity<MoneyTransfersDto> entity = new HttpEntity<>(moneyTransfersDto, httpHeaders);
+        HttpEntity<MoneyTransfersRequestDto> entity = new HttpEntity<>(moneyTransfersRequestDto, httpHeaders);
 
         Map<String, String> params = new HashMap<>();
         params.put(ACCOUNT_ID, accountId);
-        var response = restTemplate.exchange(host + createMoneyTransfersPath, HttpMethod.POST, entity, MoneyTransfersResponse.class, params);
+        var response = restTemplate.exchange(host + createMoneyTransfersPath, HttpMethod.POST, entity, MoneyTransfersResponseDto.class, params);
         return response.getBody();
     }
 

@@ -3,7 +3,7 @@ package it.aitho.fabrickonboarding.service.impl;
 import it.aitho.fabrickonboarding.client.FabrickClient;
 import it.aitho.fabrickonboarding.dto.accountbalance.AccountBalancePayload;
 import it.aitho.fabrickonboarding.dto.transactions.GetTransactionsPayload;
-import it.aitho.fabrickonboarding.entity.MoneyTransferTransactionEntity;
+import it.aitho.fabrickonboarding.entity.TransactionEntity;
 import it.aitho.fabrickonboarding.mapper.TransactionsMapper;
 import it.aitho.fabrickonboarding.repository.TransactionRepository;
 import it.aitho.fabrickonboarding.repository.TransactionTypeRepository;
@@ -46,7 +46,7 @@ public class AccountServiceImpl implements AccountService {
         if (!transactionsEntities.isEmpty()) {
             transactionTypeRepository.saveAll(transactionsEntities
                     .stream()
-                    .map(MoneyTransferTransactionEntity::getType)
+                    .map(TransactionEntity::getType)
                     .collect(Collectors.toSet())
             );
             transactionRepository.saveAll(transactionsEntities);

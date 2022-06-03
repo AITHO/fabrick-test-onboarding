@@ -1,6 +1,7 @@
 package it.aitho.fabrickonboarding.dto.moneytransfers;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import it.aitho.fabrickonboarding.enums.BeneficiaryType;
 import lombok.Data;
 import lombok.experimental.Accessors;
 

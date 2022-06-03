@@ -2,7 +2,9 @@ package it.aitho.fabrickonboarding.dto.moneytransfers;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import it.aitho.fabrickonboarding.enums.DirectionEnum;
 import it.aitho.fabrickonboarding.enums.FeeTypes;
+import it.aitho.fabrickonboarding.enums.MoneyTransferStatusEnum;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -11,7 +13,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Data
-public class MoneyTransfersPayloadDto {
+public class MoneyTransfersPayload {
     private String moneyTransferId;
     private MoneyTransferStatusEnum status;
     private DirectionEnum direction;
